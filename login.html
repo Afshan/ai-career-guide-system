@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | Student Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --primary-hover: #357abd;
+            --sidebar-bg: #f8f9fa;
+            --card-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+        }
+        
+        body {
+            background: linear-gradient(135deg, #e6f0ff 0%, #f0f7ff 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            position: relative;
+            overflow: hidden;
+            padding: 20px;
+        }
+        
+        /* Circle Background Layer with Animation */
+        .circle-background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(74, 144, 226, 0.15);
+            animation: float 15s infinite ease-in-out;
+        }
+        
+        .circle-big {
+            width: 600px;
+            height: 600px;
+            top: -200px;
+            right: -200px;
+            background-color: #c5f0f9;
+            animation-delay: 0s;
+        }
+        
+        .circle-medium {
+            width: 400px;
+            height: 400px;
+            bottom: -100px;
+            left: -100px;
+            background-color: #ffe0ec;
+            animation-delay: 5s;
+        }
+        
+        .circle-small {
+            width: 200px;
+            height: 200px;
+            bottom: 100px;
+            right: 100px;
+            background-color: #d0f4de;
+            animation-delay: 10s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(20px, 20px); }
+        }
+        
+        .login-container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+        }
+        
+        /* Clean Card Design without left border */
+        .login-card {
+            border: none;
+            border-radius: 15px;
+            background: white;
+            box-shadow: var(--card-shadow);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .login-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(31, 38, 135, 0.2);
+        }
+        
+        /* Improved Form Elements */
+        .input-group {
+            transition: all 0.3s;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #dee2e6;
+        }
+        
+        .input-group:focus-within {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+        }
+        
+        .form-control:focus {
+            box-shadow: none;
+        }
+        
+        .input-group-text {
+            background-color: #f8f9fa;
+            border-right: none;
+        }
+        
+        .form-control {
+            border-left: none;
+            background-color: #fff;
+        }
+        
+        /* Button Effect */
+        .btn-login {
+            background-color: var(--primary-color);
+            border: none;
+            padding: 10px 0;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 8px rgba(74, 144, 226, 0.2);
+        }
+        
+        .btn-login:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(74, 144, 226, 0.3);
+        }
+        
+        .btn-login:active {
+            transform: translateY(0);
+        }
+        
+        .password-toggle {
+            cursor: pointer;
+            background-color: #f8f9fa;
+            border-left: 1px solid #dee2e6;
+        }
+        
+        /* Branding */
+        .brand-logo {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .brand-text {
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Particles */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            background-color: rgba(74, 144, 226, 0.15);
+            border-radius: 50%;
+            animation: float 10s infinite ease-in-out;
+        }
+        
+        /* Fade-in Animation */
+        .fade-in {
+            opacity: 0;
+            transition: opacity 0.5s ease-in;
+        }
+        
+        .fade-in.show {
+            opacity: 1;
+        }
+        
+        /* Mobile Responsive Adjustments */
+        @media (max-width: 767.98px) {
+            body {
+                padding: 15px;
+                overflow-x: hidden;
+            }
+            
+            .login-card {
+                padding: 1.5rem !important;
+            }
+            
+            .circle-big {
+                width: 400px;
+                height: 400px;
+                top: -150px;
+                right: -150px;
+            }
+            
+            .circle-medium {
+                width: 300px;
+                height: 300px;
+            }
+            
+            .circle-small {
+                width: 150px;
+                height: 150px;
+            }
+        }
+        
+        /* Very Small Screens */
+        @media (max-width: 575.98px) {
+            .brand-logo {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .circle-medium, .circle-small {
+                opacity: 0.1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Circle Background -->
+    <div class="circle-background">
+        <div class="circle circle-big"></div>
+        <div class="circle circle-medium"></div>
+        <div class="circle circle-small"></div>
+    </div>
+    
+    <!-- Particles Background -->
+    <div class="particles" id="particles"></div>
+    
+    <div class="container login-container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+                <div class="card login-card p-4 fade-in">
+                    <div class="card-body">
+                        <div class="text-center mb-4">
+                            <i class="fas fa-graduation-cap brand-logo"></i>
+                            <h2 class="fw-bold mb-1 brand-text">Student Guide</h2>
+                            <p class="text-muted">Sign in to continue</p>
+                        </div>
+                        
+                        <form action="backend/login.php" method="POST" id="loginForm">
+                            <!-- Email Input -->
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-envelope"></i>
+                                    </span>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+                                </div>
+                            </div>
+                            
+                            <!-- Password Input -->
+                            <div class="mb-4">
+                                <label for="password" class="form-label">Password</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-lock"></i>
+                                    </span>
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+                                    <button class="btn password-toggle" type="button" id="togglePassword">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Remember Me & Forgot Password -->
+                            <div class="d-flex justify-content-between mb-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="remember">
+                                    <label class="form-check-label" for="remember">Remember me</label>
+                                </div>
+                                <a href="#" class="text-decoration-none">Forgot password?</a>
+                            </div>
+                            
+                            <!-- Submit Button -->
+                            <button type="submit" class="btn btn-primary btn-login w-100 mb-3" id="loginButton">Login</button>
+                            
+                            <!-- Sign Up Link -->
+                            <div class="text-center">
+                                <p class="text-muted">Don't have an account? <a href="register.html" class="text-decoration-none">Sign Up</a></p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Password Toggle
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const password = document.getElementById('password');
+            const icon = this.querySelector('i');
+            
+            if (password.type === 'password') {
+                password.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                password.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        });
+
+        // Fade-in effect
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.fade-in').forEach(el => {
+                setTimeout(() => {
+                    el.classList.add('show');
+                }, 200);
+            });
+        });
+
+        // Create particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = 15;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random properties
+                const size = Math.random() * 8 + 2;
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const opacity = Math.random() * 0.2 + 0.05;
+                const delay = Math.random() * 5;
+                const duration = Math.random() * 15 + 10;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
+                particle.style.opacity = opacity;
+                particle.style.animation = `float ${duration}s ease-in-out infinite ${delay}s`;
+                
+                container.appendChild(particle);
+            }
+        }
+
+        // Form submission loading state
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            const btn = document.getElementById('loginButton');
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Logging in...';
+            btn.disabled = true;
+        });
+
+        // Initialize particles
+        createParticles();
+    </script>
+</body>
+</html>
