@@ -139,7 +139,6 @@ Students can manage account-related settings through the settings page.
 
 ## Backend
 - PHP
-- Laravel
 
 ## Database
 - MySQL
